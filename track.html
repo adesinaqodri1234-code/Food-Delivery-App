@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Track Order - FreshBite</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">FreshBite</a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <div class="nav-right">
+        <nav class="nav-menu">
+          <a href="index.html">Home</a>
+          <a href="menu.html">Menu</a>
+          <a href="about.html">About</a>
+          <a href="order.html">Order</a>
+        </nav>
+        <div class="nav-actions">
+          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
+          <a href="order.html" class="btn btn-primary">Order Now</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Live demo</p>
+          <h2>Simulated live order tracking</h2>
+          <p>This demo simulates a delivery moving from the restaurant to your door, with status updates and ETA.</p>
+        </div>
+
+        <div class="track-grid">
+          <div class="map-card">
+            <div id="map" class="map-canvas">
+              <div id="marker" class="marker"></div>
+            </div>
+          </div>
+
+          <aside class="track-sidebar">
+            <div class="section-heading">
+              <p class="eyebrow">Order #1234</p>
+              <h3>Delivery status</h3>
+            </div>
+            <div id="statusLog" class="status-log">
+              <div class="status-item active">Order confirmed</div>
+              <div class="status-item">Preparing at restaurant</div>
+              <div class="status-item">On the way</div>
+              <div class="status-item">Arriving soon</div>
+              <div class="status-item">Delivered</div>
+            </div>
+            <div class="eta">
+              ETA: <strong id="eta">25 min</strong>
+            </div>
+            <div class="track-controls">
+              <button id="startSim" class="btn btn-primary">Start Simulation</button>
+              <button id="resetSim" class="btn btn-secondary">Reset</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 FreshBite</p>
+      <div class="footer-links">
+        <a href="#">Support</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function(){
+      const marker = document.getElementById('marker');
+      const statusItems = Array.from(document.querySelectorAll('.status-item'));
+      const startBtn = document.getElementById('startSim');
+      const resetBtn = document.getElementById('resetSim');
+      const etaEl = document.getElementById('eta');
+      const map = document.getElementById('map');
+
+      const path = [
+        {x: 10, y: 10},
+        {x: 40, y: 20},
+        {x: 70, y: 40},
+        {x: 80, y: 70},
+        {x: 92, y: 88}
+      ];
+
+      let anim = null;
+      let idx = 0;
+
+      function setMarker(p){
+        marker.style.left = p.x + '%';
+        marker.style.top = p.y + '%';
+      }
+
+      function setActiveStep(i){
+        statusItems.forEach((el, j) => {
+          el.classList.toggle('active', j === i);
+        });
+      }
+
+      function updateETA(i){
+        const est = Math.max(5, 30 - i*6);
+        etaEl.textContent = est + ' min';
+      }
+
+      function step(){
+        if(idx >= path.length) return stop();
+        setMarker(path[idx]);
+        setActiveStep(idx);
+        updateETA(idx);
+        idx++;
+        anim = setTimeout(step, 1800);
+      }
+
+      function start(){
+        if(anim) return;
+        idx = 0;
+        step();
+      }
+
+      function stop(){
+        clearTimeout(anim);
+        anim = null;
+      }
+
+      function reset(){
+        stop();
+        idx = 0;
+        setMarker(path[0]);
+        setActiveStep(0);
+        etaEl.textContent = '25 min';
+      }
+
+      startBtn.addEventListener('click', start);
+      resetBtn.addEventListener('click', reset);
+
+      // init
+      reset();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1154 @@
+/* Global styles */
+:root {
+  color-scheme: light;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1d2939;
+  background: #f8fafc;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.container {
+  width: min(1160px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+}
+
+.nav-menu a.active,
+.nav-menu a:hover {
+  color: #2563eb;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section-heading {
+  max-width: 620px;
+  margin-bottom: 2rem;
+}
+
+.section-heading h2,
+.hero-copy h1 {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #0f172a;
+}
+
+.hero {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero-copy p {
+  color: #475569;
+  font-size: 1rem;
+  margin: 1.25rem 0 1.75rem;
+  max-width: 520px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.hero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.hero-features li {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 0.95rem 1rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-weight: 600;
+}
+
+.hero-image-card {
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+}
+
+.page-hero {
+  padding-top: 4rem;
+}
+
+.categories-section,
+.featured-section,
+.steps-section,
+.cta-section,
+.section-intro {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.category-grid,
+.restaurant-grid,
+.steps-grid,
+.info-grid,
+.dish-grid,
+.about-grid,
+.brand-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.category-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.category-card,
+.step-card,
+.restaurant-card,
+.info-card,
+.dish-card,
+.about-card {
+  padding: 1.6rem;
+  border-radius: 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.category-icon {
+  display: inline-flex;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.1rem;
+  background: #eff6ff;
+  border-radius: 18px;
+}
+
+.category-card h3,
+.step-card h3,
+.restaurant-card h3,
+.info-card h3,
+.dish-copy h3,
+.about-card h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.15rem;
+}
+
+.category-card p,
+.step-card p,
+.restaurant-card p,
+.info-card p,
+.dish-copy p,
+.about-card p {
+  margin: 0;
+  color: #475569;
+}
+
+.restaurant-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.restaurant-card {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.restaurant-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.restaurant-card div {
+  padding: 1.4rem;
+}
+
+.steps-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.step-card {
+  background: #f8fafc;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.info-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.info-card {
+  background: #f8fafc;
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.filter-btn {
+  padding: 0.85rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.dish-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dish-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.dish-image-wrap {
+  overflow: hidden;
+}
+
+.dish-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.dish-copy {
+  padding: 1.4rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.45rem 0.85rem;
+  background: #e0f2fe;
+  color: #0369a1;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.dish-link {
+  justify-self: start;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.about-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.about-card {
+  background: #f8fafc;
+}
+
+.brand-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.brand-grid span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  border-radius: 18px;
+  background: #eff6ff;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.cta-card {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem;
+}
+
+.cta-card h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0.5rem 0 1rem;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.order-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.order-grid {
+  display: grid;
+    grid-template-columns: minmax(320px, 1.25fr) minmax(300px, 0.9fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .order-form-card,
+  .order-summary-card {
+    padding: 2rem;
+    border-radius: 32px;
+    background: #ffffff;
+    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.08);
+  }
+
+  .order-form {
+    display: grid;
+    gap: 1.75rem;
+.form-card {
+  padding: 1.75rem;
+  border-radius: 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.form-card h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+  .form-field span {
+    font-size: 0.95rem;
+    color: #475569;
+  }
+
+  .input {
+    width: 100%;
+    padding: 1rem 1.1rem;
+    border-radius: 18px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #0f172a;
+    font: inherit;
+    min-height: 50px;
+}
+
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.payment-options input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.option-field {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 22px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+}
+
+.option-field span {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.option-field::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  display: block;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.option-field:hover {
+  transform: translateY(-1px);
+  border-color: #94a3b8;
+}
+
+#payment-card:checked ~ .payment-options label[for="payment-card"],
+#payment-transfer:checked ~ .payment-options label[for="payment-transfer"] {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+}
+
+#payment-card:checked ~ .payment-options label[for="payment-card"]::before,
+#payment-transfer:checked ~ .payment-options label[for="payment-transfer"]::before {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.payment-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.payment-panel {
+  display: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+#payment-card:checked ~ .payment-details .payment-card,
+#payment-transfer:checked ~ .payment-details .payment-transfer {
+  display: block;
+  opacity: 1;
+  max-height: 2000px;
+}
+
+.payment-card,
+.payment-transfer {
+  padding: 1rem;
+  border-radius: 22px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.payment-card h4,
+.payment-transfer h4 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.split-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.payment-note {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.field-note {
+  margin: 0 0 1rem;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 960px) {
+  .split-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dropdown styles for payment selection */
+.payment-dropdown-wrapper {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.dropdown-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.1rem;
+  border-radius: 18px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: inset 0 1px 3px rgba(15,23,42,0.08);
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-top: 0.5rem;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+  display: none;
+  z-index: 60;
+}
+
+.dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.dropdown-item:hover {
+  background: #f8fafc;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Professional navbar styles */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.search {
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid #e6eefc;
+  background: #ffffff;
+  width: 220px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.nav-menu a {
+  padding: 0.5rem 0.25rem;
+  position: relative;
+}
+
+.nav-menu a.active::after,
+.nav-menu a:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #2563eb;
+  bottom: -6px;
+  border-radius: 4px;
+}
+
+@media (max-width: 720px) {
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .nav-menu {
+    order: 3;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+/* Track demo styles */
+.track-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+}
+
+.map-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg,#e6eefc,#ffffff);
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-canvas {
+  position: relative;
+  width: 94%;
+  height: 320px;
+  background: repeating-linear-gradient(45deg,#cfe6ff 0 2px, transparent 2px 10px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.marker {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2563eb;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 6px 16px rgba(37,99,235,0.2);
+}
+
+.track-sidebar {
+  padding: 1rem;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.status-log {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.status-item {
+  padding: 0.65rem 0.75rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+}
+
+.status-item.active {
+  background: linear-gradient(90deg,#2563eb,#60a5fa);
+  color: white;
+}
+
+.eta { margin-top: 1rem; font-weight:700; }
+
+.track-controls { margin-top: 1.25rem; display:flex; gap:0.5rem; }
+
+@media (max-width: 960px) {
+  .track-grid { grid-template-columns: 1fr; }
+}
+
+.text-area {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.order-summary {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.order-item img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.item-meta {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.item-meta h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.item-quantity {
+  display: flex;
+  justify-content: space-between;
+  color: #475569;
+  font-weight: 700;
+}
+
+.qty-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.qty-input {
+  width: 56px;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  text-align: center;
+}
+
+.item-price {
+  justify-self: end;
+  font-weight: 800;
+}
+
+/* Navigation / Mobile hamburger */
+.nav-toggle {
+  display: none !important;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block !important;
+  }
+
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    background: white;
+    width: 260px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .nav-right.active {
+    display: flex;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  /* Stack main layout for order page */
+  .order-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  .order-summary-card { order: 2; }
+  .order-form-card { order: 1; }
+  .order-item {
+    grid-template-columns: 1fr;
+  }
+  .order-item img {
+    height: 180px;
+  }
+  .item-quantity {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Make order-summary scroll within view when nav is open */
+  body.nav-open { overflow: hidden; }
+}
+
+@media (min-width: 960px) {
+  .order-summary-card {
+    position: sticky;
+    top: 5rem;
+  }
+}
+
+.order-total {
+  padding: 1.4rem;
+  border-radius: 22px;
+  background: #eef2ff;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.order-total div {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.total-row {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #dbeafe;
+  font-size: 1.05rem;
+}
+
+.btn-lg {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+}
+
+.site-footer {
+  padding: 1.75rem 0 2rem;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #475569;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshBite Delivery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">FreshBite</a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <div class="nav-right">
+        <nav class="nav-menu">
+          <a href="index.html" class="active">Home</a>
+          <a href="menu.html">Menu</a>
+          <a href="about.html">About</a>
+          <a href="order.html">Order</a>
+        </nav>
+        <div class="nav-actions">
+          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
+          <a href="order.html" class="btn btn-primary">Order Now</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Fast delivery • Fresh meals • Local favorites</p>
+          <h1>Delicious food delivered to your door in minutes.</h1>
+          <p>Browse nearby restaurants, build your order, and enjoy daily specials from top local chefs.</p>
+          <div class="hero-actions">
+            <a href="order.html" class="btn btn-primary">Start Your Order</a>
+            <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+          </div>
+          <ul class="hero-features">
+            <li>Live order tracking</li>
+            <li>Contactless delivery</li>
+            <li>Exclusive meal deals</li>
+          </ul>
+        </div>
+        <div class="hero-image-card">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Food delivery" />
+        </div>
+      </div>
+    </section>
+
+    <section id="categories" class="section categories-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Explore</p>
+          <h2>Choose from your favorite cuisines</h2>
+          <p>Find pizza, sushi, burgers, salads, desserts, and more from restaurants near you.</p>
+        </div>
+        <div class="category-grid">
+          <article class="category-card">
+            <span class="category-icon">🍕</span>
+            <h3>Pizza</h3>
+            <p>Hot, cheesy, and ready to share.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🍣</span>
+            <h3>Sushi</h3>
+            <p>Fresh rolls and seafood classics.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🍔</span>
+            <h3>Burgers</h3>
+            <p>Juicy patties with tasty toppings.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🥗</span>
+            <h3>Salads</h3>
+            <p>Healthy bowls made to order.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="restaurants" class="section featured-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Featured</p>
+          <h2>Top restaurants near you</h2>
+          <p>Handpicked places with great reviews and fast delivery.</p>
+        </div>
+        <div class="restaurant-grid">
+          <article class="restaurant-card">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="Italian restaurant" />
+            <div>
+              <h3>La Trattoria</h3>
+              <p>Italian • Pasta • 4.9 ⭐</p>
+              <p>Ready in 25-30 min</p>
+            </div>
+          </article>
+          <article class="restaurant-card">
+            <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?auto=format&fit=crop&w=800&q=80" alt="Sushi restaurant" />
+            <div>
+              <h3>Ocean Roll</h3>
+              <p>Sushi • Seafood • 4.8 ⭐</p>
+              <p>Ready in 20-25 min</p>
+            </div>
+          </article>
+          <article class="restaurant-card">
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="Burger restaurant" />
+            <div>
+              <h3>Grill House</h3>
+              <p>Burgers • Fries • 4.7 ⭐</p>
+              <p>Ready in 15-20 min</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="section steps-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Simple Steps</p>
+          <h2>Order food in three easy steps</h2>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-number">1</span>
+            <h3>Browse restaurants</h3>
+            <p>Pick your favorite cuisine and explore menus from nearby chefs.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">2</span>
+            <h3>Place your order</h3>
+            <p>Customize your meal, add sides, and checkout in seconds.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">3</span>
+            <h3>Enjoy delivery</h3>
+            <p>Track your order live and receive it hot and fresh.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="section cta-section">
+      <div class="container cta-card">
+        <div>
+          <p class="eyebrow">Download the app</p>
+          <h2>The easiest way to order dinner tonight.</h2>
+          <p>Get the app for instant reorders, exclusive offers, and order tracking.</p>
+          <div class="cta-buttons">
+            <a href="menu.html" class="btn btn-primary">Explore Menu</a>
+            <a href="about.html" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Phone app screenshot" />
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 FreshBite. Fast delivery from the best local restaurants.</p>
+      <div class="footer-links">
+        <a href="#">Support</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

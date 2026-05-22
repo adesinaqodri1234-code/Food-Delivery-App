@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshBite Menu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">FreshBite</a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <div class="nav-right">
+        <nav class="nav-menu">
+          <a href="index.html">Home</a>
+          <a href="menu.html" class="active">Menu</a>
+          <a href="about.html">About</a>
+          <a href="order.html">Order</a>
+        </nav>
+        <div class="nav-actions">
+          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
+          <a href="order.html" class="btn btn-primary">Order Now</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero section-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Browse the best dishes nearby</p>
+          <h1>Find your next favorite meal in seconds.</h1>
+          <p>Explore trending dishes, chef specials, and curated menus from quality restaurants.</p>
+          <div class="hero-actions">
+            <a href="#menu" class="btn btn-primary">View Menu</a>
+            <a href="#features" class="btn btn-secondary">See Benefits</a>
+          </div>
+        </div>
+        <div class="hero-image-card">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Food menu" />
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section section-intro">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Why FreshBite</p>
+          <h2>Quality menus, fast checkout, reliable delivery.</h2>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Curated choices</h3>
+            <p>Handpicked menus from top local restaurants and chefs.</p>
+          </article>
+          <article class="info-card">
+            <h3>Smart search</h3>
+            <p>Filter by cuisine, price, ratings and delivery time.</p>
+          </article>
+          <article class="info-card">
+            <h3>Real-time tracking</h3>
+            <p>Follow your order from kitchen to doorstep.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="section categories-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Menu</p>
+          <h2>Popular categories to explore</h2>
+          <p>Tap a category to view delicious dishes tailored to your cravings.</p>
+        </div>
+        <div class="category-grid">
+          <article class="category-card">
+            <span class="category-icon">🍜</span>
+            <h3>Asian</h3>
+            <p>Noodles, sushi, dumplings and wok-fired favorites.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🥪</span>
+            <h3>Sandwiches</h3>
+            <p>Craft sandwiches and wraps for quick lunches.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🥗</span>
+            <h3>Healthy</h3>
+            <p>Light bowls, salads and clean-eating options.</p>
+          </article>
+          <article class="category-card">
+            <span class="category-icon">🍰</span>
+            <h3>Desserts</h3>
+            <p>Sweet treats and indulgent desserts for every craving.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section featured-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Chef favorites</p>
+          <h2>Top dishes you can order now</h2>
+        </div>
+        <div class="category-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="asian">Asian</button>
+          <button class="filter-btn" data-filter="pizza">Pizza</button>
+          <button class="filter-btn" data-filter="burgers">Burgers</button>
+          <button class="filter-btn" data-filter="healthy">Healthy</button>
+          <button class="filter-btn" data-filter="desserts">Desserts</button>
+        </div>
+        <div class="dish-grid">
+          <article class="dish-card" data-category="pizza">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" alt="Margherita pizza" />
+            </div>
+            <div class="dish-copy">
+              <h3>Classic Margherita</h3>
+              <p>Fresh mozzarella, basil, tomato sauce, and golden crust.</p>
+              <span class="badge">$12</span>
+              <a href="order.html?item=classic-margherita" class="dish-link">Order</a>
+            </div>
+          </article>
+          <article class="dish-card" data-category="asian">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80" alt="Sushi bowl" />
+            </div>
+            <div class="dish-copy">
+              <h3>Sushi Bowl</h3>
+              <p>Shrimp, avocado, rice, seaweed salad, and sesame dressing.</p>
+              <span class="badge">$18</span>
+              <a href="order.html?item=sushi-bowl" class="dish-link">Order</a>
+            </div>
+          </article>
+          <article class="dish-card" data-category="burgers">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" alt="Gourmet burger" />
+            </div>
+            <div class="dish-copy">
+              <h3>Signature Burger</h3>
+              <p>Angus beef, special sauce, cheddar, pickles, and crispy onions.</p>
+              <span class="badge">$15</span>
+              <a href="order.html?item=signature-burger" class="dish-link">Order</a>
+            </div>
+          </article>
+          <article class="dish-card" data-category="healthy">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80" alt="Harvest salad" />
+            </div>
+            <div class="dish-copy">
+              <h3>Harvest Salad</h3>
+              <p>Mixed greens, roasted squash, quinoa, almonds, and lemon vinaigrette.</p>
+              <span class="badge">$13</span>
+              <a href="order.html?item=harvest-salad" class="dish-link">Order</a>
+            </div>
+          </article>
+          <article class="dish-card" data-category="desserts">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1589710759951-440f9d04efc6?auto=format&fit=crop&w=800&q=80" alt="Berry cheesecake" />
+            </div>
+            <div class="dish-copy">
+              <h3>Berry Cheesecake</h3>
+              <p>Velvety cheesecake with berry compote and graham crust.</p>
+              <span class="badge">$10</span>
+              <a href="order.html?item=berry-cheesecake" class="dish-link">Order</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 FreshBite. Fast delivery from the best local restaurants.</p>
+      <div class="footer-links">
+        <a href="#">Support</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
