@@ -102,12 +102,12 @@ img {
 }
 
 .btn-primary {
-  background: #2563eb;
+  background: #D45C2A;
   color: white;
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
+  background: #B94D20;
 }
 
 .btn-secondary {
@@ -443,6 +443,7 @@ img {
   .order-form {
     display: grid;
     gap: 1.75rem;
+  }
 .form-card {
   padding: 1.75rem;
   border-radius: 24px;
@@ -799,6 +800,31 @@ img {
   border: 1px solid #e2e8f0;
 }
 
+/* AI Chat widget styles */
+.ai-chat { position: fixed; right: 20px; bottom: 24px; z-index: 1200; }
+.ai-toggle {
+  width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+  background: linear-gradient(180deg,#2563eb,#1e40af); color: #fff; font-size: 24px;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.2);
+}
+.ai-panel {
+  width: 340px; max-width: calc(100vw - 48px); height: 420px; margin-bottom: 12px;
+  background: #ffffff; border-radius: 14px; box-shadow: 0 30px 60px rgba(2,6,23,0.2);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.ai-header { padding: 12px 16px; font-weight: 700; background: linear-gradient(90deg,#111827,#1f2937); color: #fff; }
+.ai-messages { padding: 12px; flex: 1 1 auto; overflow: auto; display: flex; flex-direction: column; gap: 8px; background: linear-gradient(180deg,#f8fafc,#ffffff); }
+.ai-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #eef2ff; }
+.ai-input { flex: 1 1 auto; padding: 10px 12px; border-radius: 10px; border: 1px solid #e6eefc; outline: none; }
+.ai-message { padding: 10px 12px; border-radius: 12px; max-width: 86%; line-height: 1.4; }
+.ai-user { align-self: flex-end; background: linear-gradient(90deg,#2563eb,#1e40af); color: #fff; }
+.ai-assistant { align-self: flex-start; background: #f1f5f9; color: #0f172a; }
+
+@media (max-width: 640px) {
+  .ai-panel { width: 92vw; right: 4vw; bottom: 18px; height: 60vh; }
+  .ai-chat { right: 12px; bottom: 12px; }
+}
+
 .order-item img {
   width: 100%;
   height: 110px;
@@ -978,177 +1004,3 @@ img {
   color: #475569;
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreshBite Delivery</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">FreshBite</a>
-      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-      <div class="nav-right">
-        <nav class="nav-menu">
-          <a href="index.html" class="active">Home</a>
-          <a href="menu.html">Menu</a>
-          <a href="about.html">About</a>
-          <a href="order.html">Order</a>
-        </nav>
-        <div class="nav-actions">
-          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
-          <a href="order.html" class="btn btn-primary">Order Now</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero section-hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Fast delivery • Fresh meals • Local favorites</p>
-          <h1>Delicious food delivered to your door in minutes.</h1>
-          <p>Browse nearby restaurants, build your order, and enjoy daily specials from top local chefs.</p>
-          <div class="hero-actions">
-            <a href="order.html" class="btn btn-primary">Start Your Order</a>
-            <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
-          </div>
-          <ul class="hero-features">
-            <li>Live order tracking</li>
-            <li>Contactless delivery</li>
-            <li>Exclusive meal deals</li>
-          </ul>
-        </div>
-        <div class="hero-image-card">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Food delivery" />
-        </div>
-      </div>
-    </section>
-
-    <section id="categories" class="section categories-section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Explore</p>
-          <h2>Choose from your favorite cuisines</h2>
-          <p>Find pizza, sushi, burgers, salads, desserts, and more from restaurants near you.</p>
-        </div>
-        <div class="category-grid">
-          <article class="category-card">
-            <span class="category-icon">🍕</span>
-            <h3>Pizza</h3>
-            <p>Hot, cheesy, and ready to share.</p>
-          </article>
-          <article class="category-card">
-            <span class="category-icon">🍣</span>
-            <h3>Sushi</h3>
-            <p>Fresh rolls and seafood classics.</p>
-          </article>
-          <article class="category-card">
-            <span class="category-icon">🍔</span>
-            <h3>Burgers</h3>
-            <p>Juicy patties with tasty toppings.</p>
-          </article>
-          <article class="category-card">
-            <span class="category-icon">🥗</span>
-            <h3>Salads</h3>
-            <p>Healthy bowls made to order.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="restaurants" class="section featured-section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Featured</p>
-          <h2>Top restaurants near you</h2>
-          <p>Handpicked places with great reviews and fast delivery.</p>
-        </div>
-        <div class="restaurant-grid">
-          <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="Italian restaurant" />
-            <div>
-              <h3>La Trattoria</h3>
-              <p>Italian • Pasta • 4.9 ⭐</p>
-              <p>Ready in 25-30 min</p>
-            </div>
-          </article>
-          <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?auto=format&fit=crop&w=800&q=80" alt="Sushi restaurant" />
-            <div>
-              <h3>Ocean Roll</h3>
-              <p>Sushi • Seafood • 4.8 ⭐</p>
-              <p>Ready in 20-25 min</p>
-            </div>
-          </article>
-          <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="Burger restaurant" />
-            <div>
-              <h3>Grill House</h3>
-              <p>Burgers • Fries • 4.7 ⭐</p>
-              <p>Ready in 15-20 min</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="how-it-works" class="section steps-section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Simple Steps</p>
-          <h2>Order food in three easy steps</h2>
-        </div>
-        <div class="steps-grid">
-          <article class="step-card">
-            <span class="step-number">1</span>
-            <h3>Browse restaurants</h3>
-            <p>Pick your favorite cuisine and explore menus from nearby chefs.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">2</span>
-            <h3>Place your order</h3>
-            <p>Customize your meal, add sides, and checkout in seconds.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">3</span>
-            <h3>Enjoy delivery</h3>
-            <p>Track your order live and receive it hot and fresh.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="download" class="section cta-section">
-      <div class="container cta-card">
-        <div>
-          <p class="eyebrow">Download the app</p>
-          <h2>The easiest way to order dinner tonight.</h2>
-          <p>Get the app for instant reorders, exclusive offers, and order tracking.</p>
-          <div class="cta-buttons">
-            <a href="menu.html" class="btn btn-primary">Explore Menu</a>
-            <a href="about.html" class="btn btn-secondary">Learn More</a>
-          </div>
-        </div>
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Phone app screenshot" />
-      </div>
-    </section>
-  </main>
-
-  <footer id="footer" class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2026 FreshBite. Fast delivery from the best local restaurants.</p>
-      <div class="footer-links">
-        <a href="#">Support</a>
-        <a href="#">Terms</a>
-        <a href="#">Privacy</a>
-      </div>
-    </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
-</html>

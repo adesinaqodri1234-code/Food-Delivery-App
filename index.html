@@ -3,39 +3,691 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreshBite Delivery</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>FreshBite — Fresh Food Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF7F2;
+      --warm-white: #FFFDF9;
+      --charcoal: #1C1A17;
+      --charcoal-soft: #2E2B26;
+      --muted: #706B61;
+      --muted-light: #A09A8F;
+      --accent: #D45C2A;
+      --accent-hover: #B94D20;
+      --accent-pale: #FDF0E8;
+      --green: #2E6B4F;
+      --green-pale: #EAF3EE;
+      --border: rgba(28,26,23,0.10);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 32px;
+      --shadow-card: 0 2px 20px rgba(28,26,23,0.07);
+      --shadow-hover: 0 8px 40px rgba(28,26,23,0.13);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--warm-white);
+      color: var(--charcoal);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── CONTAINER ── */
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212,92,42,0.35);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--cream);
+      border-color: rgba(28,26,23,0.2);
+    }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,253,249,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      position: relative; /* FIX: anchor for mobile dropdown */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 24px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-menu a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 100px;
+      transition: all 0.15s ease;
+    }
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--charcoal);
+      background: var(--cream);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+    .search {
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 9px 18px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      background: var(--cream);
+      color: var(--charcoal);
+      width: 220px;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .search::placeholder { color: var(--muted-light); }
+    .search:focus {
+      border-color: var(--accent);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(212,92,42,0.12);
+      width: 260px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--charcoal);
+    }
+
+    /* ── HERO ── */
+    .section-hero {
+      padding: 80px 0 60px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-copy h1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+    }
+    .hero-copy > p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .hero-features {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hero-features li {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      background: var(--green-pale);
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+    .hero-features li::before {
+      content: '✓ ';
+      font-weight: 700;
+    }
+
+    /* FIX: removed overflow:hidden so badge shadow isn't clipped */
+    .hero-image-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      aspect-ratio: 4/3;
+      box-shadow: var(--shadow-hover);
+    }
+    .hero-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+      transition: transform 0.6s ease;
+      display: block;
+    }
+    .hero-image-card:hover img { transform: scale(1.03); }
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255,253,249,0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-hover);
+    }
+    .hero-badge-icon { font-size: 28px; line-height: 1; }
+    .hero-badge-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+    .hero-badge-text span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── SECTION COMMON ── */
+    .section { padding: 80px 0; }
+    .section-heading {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 52px;
+    }
+    .section-heading h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--charcoal);
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .section-heading p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CATEGORIES ── */
+    .categories-section { background: var(--warm-white); }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .category-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .category-card:hover {
+      background: var(--accent-pale);
+      border-color: rgba(212,92,42,0.2);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .category-icon { font-size: 40px; display: block; margin-bottom: 14px; }
+    .category-card h3 {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .category-card p { font-size: 13px; color: var(--muted); }
+
+    /* ── FEATURED RESTAURANTS ── */
+    .featured-section { background: var(--cream); }
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .restaurant-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: all 0.25s ease;
+    }
+    .restaurant-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .restaurant-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .restaurant-card:hover img { transform: scale(1.05); }
+    .restaurant-card-body { padding: 20px; }
+    .restaurant-card-body h3 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .restaurant-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .restaurant-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--green);
+      background: var(--green-pale);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-top: 8px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps-section { background: var(--warm-white); }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    /* FIX: corrected top value to bisect the step-number circles */
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 62px;
+      left: calc(16.66% + 26px);
+      right: calc(16.66% + 26px);
+      height: 1px;
+      background: repeating-linear-gradient(to right, var(--accent) 0, var(--accent) 6px, transparent 6px, transparent 14px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .step-card {
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-card h3 {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+    .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--charcoal); }
+    .cta-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+    }
+    .cta-card .eyebrow { color: var(--accent); }
+    .cta-card h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .cta-card > div > p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+      max-width: 460px;
+    }
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* FIX: explicit transparent bg + light border/text for dark section */
+    .cta-section .btn-secondary {
+      color: rgba(255,255,255,0.8);
+      border-color: rgba(255,255,255,0.2);
+      background: transparent;
+    }
+    .cta-section .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-1px);
+    }
+    .cta-card img {
+      width: 280px;
+      height: 320px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      opacity: 0.85;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--charcoal-soft);
+      color: rgba(255,255,255,0.5);
+      padding: 28px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-inner p { font-size: 14px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: #fff; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-copy { animation: fadeUp 0.7s ease both; }
+    .hero-image-card { animation: fadeUp 0.7s 0.15s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-image-card { max-width: 520px; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .restaurant-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+      .cta-card { grid-template-columns: 1fr; }
+      .cta-card img { width: 100%; max-width: 400px; height: 240px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-menu, .search { display: none; }
+      .nav-toggle { display: flex; align-items: center; justify-content: center; }
+      .restaurant-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .hero-copy h1 { font-size: 34px; }
+      .section { padding: 56px 0; }
+      .section-hero { padding: 48px 0; }
+    }
+
+    /* ── MOBILE NAV OPEN STATE ── */
+    /* FIX: dropdown anchored to .header-inner (position:relative) */
+    .nav-open .nav-menu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 72px;
+      left: -24px;
+      right: -24px;
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      gap: 4px;
+      z-index: 99;
+      box-shadow: 0 8px 24px rgba(28,26,23,0.08);
+    }
+    .nav-open .nav-menu a {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ── AI ASSISTANT ── */
+    .ai-chat {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .ai-toggle {
+      width: 56px;
+      height: 56px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(28,26,23,0.2);
+    }
+    .ai-panel {
+      width: min(350px, calc(100vw - 32px));
+      height: 430px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 18px 44px rgba(28,26,23,0.18);
+      border: 1px solid var(--border);
+    }
+    .ai-header {
+      padding: 14px 16px;
+      background: var(--charcoal);
+      color: #fff;
+      font-weight: 600;
+    }
+    .ai-messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ai-form {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    .ai-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font: inherit;
+      outline: none;
+    }
+    .ai-message {
+      max-width: 85%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .ai-user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: #fff;
+    }
+    .ai-assistant {
+      align-self: flex-start;
+      background: #fff;
+      color: var(--charcoal);
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 640px) {
+      .ai-chat { right: 12px; bottom: 12px; }
+      .ai-panel { height: 70vh; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
     <div class="container header-inner">
-      <a href="index.html" class="logo">FreshBite</a>
-      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="#" class="logo">Fresh<span>Bite</span></a>
+
+      <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">About</a>
+        <a href="order.html">Order</a>
+        <a href="track.html">Track</a>
+      </nav>
+
       <div class="nav-right">
-        <nav class="nav-menu">
-          <a href="index.html" class="active">Home</a>
-          <a href="menu.html">Menu</a>
-          <a href="about.html">About</a>
-          <a href="order.html">Order</a>
-        </nav>
-        <div class="nav-actions">
-          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
-          <a href="order.html" class="btn btn-primary">Order Now</a>
-        </div>
+        <input class="search" type="search" placeholder="Search dishes or restaurants…" aria-label="Search" />
+        <a href="order.html" class="btn btn-primary">Order Now</a>
       </div>
+
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     </div>
   </header>
 
   <main>
-    <section class="hero section-hero">
+
+    <!-- HERO -->
+    <section class="section-hero" id="home">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Fast delivery • Fresh meals • Local favorites</p>
-          <h1>Delicious food delivered to your door in minutes.</h1>
-          <p>Browse nearby restaurants, build your order, and enjoy daily specials from top local chefs.</p>
+          <p class="eyebrow">Fast delivery · Fresh meals · Local favourites</p>
+          <h1>Delicious food, delivered to your door.</h1>
+          <p>Browse nearby restaurants, build your order, and enjoy daily specials from the best local chefs — all in minutes.</p>
           <div class="hero-actions">
             <a href="order.html" class="btn btn-primary">Start Your Order</a>
-            <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+            <a href="menu.html" class="btn btn-secondary">Browse the Menu</a>
           </div>
           <ul class="hero-features">
             <li>Live order tracking</li>
@@ -43,17 +695,59 @@
             <li>Exclusive meal deals</li>
           </ul>
         </div>
+
         <div class="hero-image-card">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Food delivery" />
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Colourful fresh salad bowl" />
+          <div class="hero-badge">
+            <span class="hero-badge-icon">🚀</span>
+            <div class="hero-badge-text">
+              <strong>Avg. 22 min</strong>
+              <span>Delivery time today</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- APP PAGES -->
+    <section id="pages" class="section categories-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Explore pages</p>
+          <h2>Move between the app pages</h2>
+          <p>Visit the menu, place an order, track a delivery, or learn more about FreshBite.</p>
+        </div>
+        <div class="category-grid">
+          <a class="category-card" href="menu.html">
+            <span class="category-icon">🍽️</span>
+            <h3>Menu Page</h3>
+            <p>Browse dishes and cuisines.</p>
+          </a>
+          <a class="category-card" href="order.html">
+            <span class="category-icon">🛒</span>
+            <h3>Order Page</h3>
+            <p>Complete your checkout flow.</p>
+          </a>
+          <a class="category-card" href="track.html">
+            <span class="category-icon">📍</span>
+            <h3>Track Page</h3>
+            <p>Follow your delivery in real time.</p>
+          </a>
+          <a class="category-card" href="about.html">
+            <span class="category-icon">ℹ️</span>
+            <h3>About Page</h3>
+            <p>Learn about the brand and mission.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
     <section id="categories" class="section categories-section">
       <div class="container">
         <div class="section-heading">
           <p class="eyebrow">Explore</p>
-          <h2>Choose from your favorite cuisines</h2>
+          <h2>Choose from your favourite cuisines</h2>
           <p>Find pizza, sushi, burgers, salads, desserts, and more from restaurants near you.</p>
         </div>
         <div class="category-grid">
@@ -70,7 +764,7 @@
           <article class="category-card">
             <span class="category-icon">🍔</span>
             <h3>Burgers</h3>
-            <p>Juicy patties with tasty toppings.</p>
+            <p>Juicy patties with bold toppings.</p>
           </article>
           <article class="category-card">
             <span class="category-icon">🥗</span>
@@ -81,6 +775,7 @@
       </div>
     </section>
 
+    <!-- FEATURED RESTAURANTS -->
     <section id="restaurants" class="section featured-section">
       <div class="container">
         <div class="section-heading">
@@ -90,85 +785,213 @@
         </div>
         <div class="restaurant-grid">
           <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="Italian restaurant" />
-            <div>
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="La Trattoria pasta dish" />
+            <div class="restaurant-card-body">
               <h3>La Trattoria</h3>
-              <p>Italian • Pasta • 4.9 ⭐</p>
-              <p>Ready in 25-30 min</p>
+              <p class="restaurant-meta">Italian · Pasta · 4.9 ⭐</p>
+              <span class="restaurant-time">⏱ 25–30 min</span>
             </div>
           </article>
           <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?auto=format&fit=crop&w=800&q=80" alt="Sushi restaurant" />
-            <div>
+            <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?auto=format&fit=crop&w=800&q=80" alt="Ocean Roll sushi platter" />
+            <div class="restaurant-card-body">
               <h3>Ocean Roll</h3>
-              <p>Sushi • Seafood • 4.8 ⭐</p>
-              <p>Ready in 20-25 min</p>
+              <p class="restaurant-meta">Sushi · Seafood · 4.8 ⭐</p>
+              <span class="restaurant-time">⏱ 20–25 min</span>
             </div>
           </article>
           <article class="restaurant-card">
-            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="Burger restaurant" />
-            <div>
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="Grill House burger" />
+            <div class="restaurant-card-body">
               <h3>Grill House</h3>
-              <p>Burgers • Fries • 4.7 ⭐</p>
-              <p>Ready in 15-20 min</p>
+              <p class="restaurant-meta">Burgers · Fries · 4.7 ⭐</p>
+              <span class="restaurant-time">⏱ 15–20 min</span>
             </div>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- HOW IT WORKS -->
     <section id="how-it-works" class="section steps-section">
       <div class="container">
         <div class="section-heading">
           <p class="eyebrow">Simple Steps</p>
           <h2>Order food in three easy steps</h2>
+          <p>From craving to doorstep in minutes — no fuss, no hassle.</p>
         </div>
         <div class="steps-grid">
           <article class="step-card">
             <span class="step-number">1</span>
             <h3>Browse restaurants</h3>
-            <p>Pick your favorite cuisine and explore menus from nearby chefs.</p>
+            <p>Pick your favourite cuisine and explore menus from top local chefs nearby.</p>
           </article>
           <article class="step-card">
             <span class="step-number">2</span>
             <h3>Place your order</h3>
-            <p>Customize your meal, add sides, and checkout in seconds.</p>
+            <p>Customise your meal, add sides, and check out securely in seconds.</p>
           </article>
           <article class="step-card">
             <span class="step-number">3</span>
             <h3>Enjoy delivery</h3>
-            <p>Track your order live and receive it hot and fresh.</p>
+            <p>Track your order live and receive it hot, fresh, and right on time.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- CTA -->
     <section id="download" class="section cta-section">
       <div class="container cta-card">
         <div>
-          <p class="eyebrow">Download the app</p>
+          <p class="eyebrow">Get started today</p>
           <h2>The easiest way to order dinner tonight.</h2>
-          <p>Get the app for instant reorders, exclusive offers, and order tracking.</p>
+          <p>Instant reorders, exclusive offers, and live order tracking — all in one place.</p>
           <div class="cta-buttons">
-            <a href="menu.html" class="btn btn-primary">Explore Menu</a>
-            <a href="about.html" class="btn btn-secondary">Learn More</a>
+            <a href="#categories" class="btn btn-primary">Explore the Menu</a>
+            <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Phone app screenshot" />
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Restaurant interior ambience" />
       </div>
     </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer id="footer" class="site-footer">
     <div class="container footer-inner">
       <p>© 2026 FreshBite. Fast delivery from the best local restaurants.</p>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="#">Support</a>
         <a href="#">Terms</a>
         <a href="#">Privacy</a>
-      </div>
+      </nav>
     </div>
   </footer>
-  <script src="script.js"></script>
+
+  <!-- AI CHAT WIDGET -->
+  <div id="aiChat" class="ai-chat">
+    <button id="aiToggle" class="ai-toggle" aria-label="Open assistant">🤖</button>
+    <div class="ai-panel" id="aiPanel" hidden>
+      <header class="ai-header">FreshBite Assistant</header>
+      <div class="ai-messages" id="aiMessages" role="log" aria-live="polite"></div>
+      <form id="aiForm" class="ai-form">
+        <input id="aiInput" class="ai-input" placeholder="Ask about menu, orders, or recommendations..." autocomplete="off" />
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const headerInner = document.querySelector('.header-inner');
+
+    if (toggle && headerInner) {
+      toggle.addEventListener('click', () => {
+        const isOpen = headerInner.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', isOpen);
+        toggle.textContent = isOpen ? '✕' : '☰';
+      });
+
+      headerInner.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          headerInner.classList.remove('nav-open');
+          toggle.setAttribute('aria-expanded', false);
+          toggle.textContent = '☰';
+        });
+      });
+    }
+
+    // ── Active nav highlight on scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const hrefToId = {
+      '#': 'home',
+      '#categories': 'categories',
+      '#restaurants': 'restaurants',
+      '#how-it-works': 'how-it-works'
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              const targetId = hrefToId[link.getAttribute('href')];
+              link.classList.toggle('active', targetId === entry.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+      sections.forEach(s => observer.observe(s));
+    }
+
+    // ── AI assistant toggle ──
+    const aiToggle = document.getElementById('aiToggle');
+    const aiPanel = document.getElementById('aiPanel');
+    const aiForm = document.getElementById('aiForm');
+    const aiInput = document.getElementById('aiInput');
+    const aiMessages = document.getElementById('aiMessages');
+
+    if (aiToggle && aiPanel && aiForm && aiInput && aiMessages) {
+      const aiApiUrl = window.location.protocol === 'file:'
+        ? 'http://localhost:5174/api/ai'
+        : '/api/ai';
+
+      aiToggle.addEventListener('click', () => {
+        const isOpen = aiPanel.hasAttribute('hidden');
+        if (isOpen) {
+          aiPanel.removeAttribute('hidden');
+          aiInput.focus();
+        } else {
+          aiPanel.setAttribute('hidden', '');
+        }
+      });
+
+      function addMessage(text, type) {
+        const bubble = document.createElement('div');
+        bubble.className = `ai-message ai-${type}`;
+        bubble.textContent = text;
+        aiMessages.appendChild(bubble);
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+      }
+
+      aiForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const text = aiInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        aiInput.value = '';
+        addMessage('Thinking...', 'assistant');
+
+        try {
+          const response = await fetch(aiApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+          });
+          const data = await response.json();
+          const reply = data.reply || data.error || 'The assistant is currently unavailable. Please check your OpenAI setup.';
+          const lastBubble = aiMessages.querySelector('.ai-assistant:last-of-type');
+          if (lastBubble) {
+            lastBubble.textContent = reply;
+          } else {
+            addMessage(reply, 'assistant');
+          }
+        } catch (err) {
+          const lastBubble = aiMessages.querySelector('.ai-assistant:last-of-type');
+          if (lastBubble) {
+            lastBubble.textContent = 'The assistant could not connect. Open the app at http://localhost:5174/ and make sure the server is running.';
+          } else {
+            addMessage('The assistant could not connect. Open the app at http://localhost:5174/ and make sure the server is running.', 'assistant');
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -3,43 +3,526 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreshBite Menu</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>FreshBite — Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #18160F;
+      --ink-soft:   #2C2A22;
+      --muted:      #6B6558;
+      --muted-lt:   #A09890;
+      --sand:       #F5F0E8;
+      --sand-lt:    #FAF8F3;
+      --white:      #FFFEFB;
+      --fire:       #C94B1A;
+      --fire-hover: #A83C12;
+      --fire-pale:  #FDF0E8;
+      --leaf:       #2A6048;
+      --leaf-pale:  #E8F2EC;
+      --gold:       #B8892A;
+      --border:     rgba(24,22,15,0.09);
+      --border-md:  rgba(24,22,15,0.14);
+
+      --r-sm: 6px;
+      --r-md: 12px;
+      --r-lg: 20px;
+      --r-xl: 28px;
+      --r-full: 999px;
+
+      --shadow-sm:  0 1px 8px rgba(24,22,15,0.06);
+      --shadow-md:  0 4px 24px rgba(24,22,15,0.10);
+      --shadow-lg:  0 12px 48px rgba(24,22,15,0.14);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --header-h: 70px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { font-family: var(--font-body); cursor: pointer; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--sand); }
+    ::-webkit-scrollbar-thumb { background: var(--muted-lt); border-radius: 99px; }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fire);
+      margin-bottom: 14px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 24px; height: 1.5px;
+      background: var(--fire);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: var(--r-full);
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      transition: all 0.22s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn-primary { background: #D45C2A; color: #fff; }
+    .btn-primary:hover {
+      background: #B94D20;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212,92,42,0.32);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border-md);
+    }
+    .btn-secondary:hover { background: var(--sand); border-color: rgba(24,22,15,0.22); }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255,254,251,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: var(--header-h);
+      gap: 20px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 27px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .logo span { color: var(--fire); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 2px; }
+    .nav-menu a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 7px 14px;
+      border-radius: var(--r-full);
+      transition: all 0.15s;
+    }
+    .nav-menu a:hover { color: var(--ink); background: var(--sand); }
+    .nav-menu a.active { color: var(--ink); background: var(--sand); font-weight: 500; }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; margin-left: 10px; }
+    .search {
+      border: 1px solid var(--border-md);
+      border-radius: var(--r-full);
+      padding: 9px 18px;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      background: var(--sand);
+      color: var(--ink);
+      width: 210px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search::placeholder { color: var(--muted-lt); }
+    .search:focus {
+      border-color: var(--fire);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201,75,26,0.11);
+      width: 250px;
+    }
+
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      background: none;
+      border: 1px solid var(--border-md);
+      border-radius: var(--r-sm);
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    .nav-open .nav-menu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: var(--header-h);
+      left: -28px; right: -28px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      gap: 2px;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(24,22,15,0.08);
+    }
+    .nav-open .nav-menu a { padding: 11px 14px; border-radius: var(--r-sm); }
+
+    /* ── HERO ── */
+    .page-hero {
+      background: var(--sand);
+      padding: 72px 0 60px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-copy h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .hero-copy h1 em { font-style: italic; color: var(--fire); }
+    .hero-copy > p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-image-card {
+      position: relative;
+      border-radius: var(--r-xl);
+      aspect-ratio: 5/4;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-image-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .hero-image-card:hover img { transform: scale(1.04); }
+
+    .hero-stat {
+      position: absolute;
+      bottom: 22px; left: 22px;
+      background: rgba(255,254,251,0.96);
+      backdrop-filter: blur(10px);
+      border-radius: var(--r-md);
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-stat-icon { font-size: 26px; line-height: 1; }
+    .hero-stat strong { display: block; font-size: 14px; font-weight: 500; color: var(--ink); }
+    .hero-stat span { font-size: 12px; color: var(--muted); }
+
+    /* ── SECTIONS ── */
+    .section { padding: 80px 0; }
+    .section-heading { text-align: center; max-width: 560px; margin: 0 auto 52px; }
+    .section-heading h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+    .section-heading p { font-size: 15.5px; color: var(--muted); line-height: 1.7; }
+
+    /* ── INFO CARDS ── */
+    .section-intro { background: var(--white); }
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .info-card {
+      background: var(--sand);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 32px 28px;
+      transition: box-shadow 0.22s, transform 0.22s;
+    }
+    .info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .info-card-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+    .info-card h3 {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .info-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── CATEGORIES ── */
+    .categories-section { background: var(--sand); }
+    .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .category-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+    .category-card:hover {
+      background: var(--fire-pale);
+      border-color: rgba(201,75,26,0.18);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .category-icon { font-size: 38px; display: block; margin-bottom: 12px; }
+    .category-card h3 { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+    .category-card p { font-size: 13px; color: var(--muted); }
+
+    /* ── DISH GRID ── */
+    .featured-section { background: var(--white); }
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 9px 20px;
+      border-radius: var(--r-full);
+      font-size: 13.5px;
+      font-weight: 400;
+      background: var(--sand);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      transition: all 0.18s ease;
+    }
+    .filter-btn:hover { background: var(--fire-pale); color: var(--fire); border-color: rgba(201,75,26,0.2); }
+    .filter-btn.active { background: var(--fire); color: #fff; border-color: var(--fire); font-weight: 500; }
+
+    .dish-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .dish-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .dish-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .dish-card[hidden] { display: none; }
+
+    .dish-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; }
+    .dish-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dish-card:hover .dish-image-wrap img { transform: scale(1.06); }
+
+    .dish-tag {
+      position: absolute;
+      top: 12px; left: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--r-full);
+      background: rgba(255,254,251,0.92);
+      backdrop-filter: blur(6px);
+      color: var(--muted);
+    }
+
+    .dish-copy { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+    .dish-copy h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .dish-copy > p { font-size: 13.5px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 16px; }
+
+    .dish-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .dish-price { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--ink); }
+    .dish-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: var(--fire);
+      color: #fff;
+      border-radius: var(--r-full);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .dish-link:hover {
+      background: var(--fire-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(201,75,26,0.3);
+    }
+    .dish-link::after { content: ' →'; }
+
+    .dish-rating {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gold);
+      background: #FDF6E3;
+      padding: 4px 10px;
+      border-radius: var(--r-full);
+      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      width: fit-content;
+    }
+
+    .dish-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted-lt);
+      font-size: 15px;
+      display: none;
+    }
+    .dish-empty.visible { display: block; }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--ink-soft); color: rgba(255,255,255,0.45); padding: 28px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .footer-inner p { font-size: 13.5px; }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a { font-size: 13.5px; color: rgba(255,255,255,0.45); transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-copy { animation: fadeUp 0.65s ease both; }
+    .hero-image-card { animation: fadeUp 0.65s 0.14s ease both; }
+    .info-card:nth-child(1) { animation: fadeUp 0.5s 0.05s ease both; }
+    .info-card:nth-child(2) { animation: fadeUp 0.5s 0.12s ease both; }
+    .info-card:nth-child(3) { animation: fadeUp 0.5s 0.19s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-image-card { max-width: 540px; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .dish-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .nav-menu, .nav-actions { display: none; }
+      .nav-toggle { display: flex; }
+      .info-grid { grid-template-columns: 1fr; }
+      .dish-grid { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-copy h1 { font-size: 34px; }
+      .section { padding: 56px 0; }
+      .page-hero { padding: 52px 0 44px; }
+    }
+  </style>
 </head>
 <body>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">FreshBite</a>
-      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <a href="index.html" class="logo">Fresh<span>Bite</span></a>
       <div class="nav-right">
-        <nav class="nav-menu">
+        <nav class="nav-menu" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="menu.html" class="active">Menu</a>
           <a href="about.html">About</a>
           <a href="order.html">Order</a>
+          <a href="track.html">Track</a>
         </nav>
         <div class="nav-actions">
-          <input class="search" type="search" placeholder="Search restaurants or dishes" aria-label="Search" />
+          <input class="search" type="search" placeholder="Search dishes or restaurants…" aria-label="Search" />
           <a href="order.html" class="btn btn-primary">Order Now</a>
         </div>
       </div>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     </div>
   </header>
 
   <main>
-    <section class="page-hero section-hero">
+
+    <section class="page-hero">
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Browse the best dishes nearby</p>
-          <h1>Find your next favorite meal in seconds.</h1>
-          <p>Explore trending dishes, chef specials, and curated menus from quality restaurants.</p>
+          <h1>Find your next <em>favourite</em> meal in seconds.</h1>
+          <p>Explore trending dishes, chef specials, and curated menus from quality restaurants — delivered fast.</p>
           <div class="hero-actions">
             <a href="#menu" class="btn btn-primary">View Menu</a>
             <a href="#features" class="btn btn-secondary">See Benefits</a>
           </div>
         </div>
         <div class="hero-image-card">
-          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Food menu" />
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Colourful food spread" />
+          <div class="hero-stat">
+            <span class="hero-stat-icon">🍽️</span>
+            <div>
+              <strong>200+ dishes</strong>
+              <span>Updated daily</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -49,19 +532,23 @@
         <div class="section-heading">
           <p class="eyebrow">Why FreshBite</p>
           <h2>Quality menus, fast checkout, reliable delivery.</h2>
+          <p>Everything you need to get great food on your table without the hassle.</p>
         </div>
         <div class="info-grid">
           <article class="info-card">
+            <span class="info-card-icon">🧑‍🍳</span>
             <h3>Curated choices</h3>
-            <p>Handpicked menus from top local restaurants and chefs.</p>
+            <p>Handpicked menus from top local restaurants and chefs vetted for quality and consistency.</p>
           </article>
           <article class="info-card">
+            <span class="info-card-icon">🔍</span>
             <h3>Smart search</h3>
-            <p>Filter by cuisine, price, ratings and delivery time.</p>
+            <p>Filter by cuisine, price range, dietary preference, ratings and estimated delivery time.</p>
           </article>
           <article class="info-card">
+            <span class="info-card-icon">📍</span>
             <h3>Real-time tracking</h3>
-            <p>Follow your order from kitchen to doorstep.</p>
+            <p>Follow your order live from the kitchen all the way to your doorstep — no guessing.</p>
           </article>
         </div>
       </div>
@@ -70,42 +557,44 @@
     <section id="menu" class="section categories-section">
       <div class="container">
         <div class="section-heading">
-          <p class="eyebrow">Menu</p>
-          <h2>Popular categories to explore</h2>
-          <p>Tap a category to view delicious dishes tailored to your cravings.</p>
+          <p class="eyebrow">Explore</p>
+          <h2>Popular categories</h2>
+          <p>Tap a category to browse dishes tailored to your cravings right now.</p>
         </div>
         <div class="category-grid">
-          <article class="category-card">
+          <article class="category-card" data-jump="asian">
             <span class="category-icon">🍜</span>
             <h3>Asian</h3>
-            <p>Noodles, sushi, dumplings and wok-fired favorites.</p>
+            <p>Noodles, sushi, dumplings and wok-fired favourites.</p>
           </article>
-          <article class="category-card">
+          <article class="category-card" data-jump="sandwiches">
             <span class="category-icon">🥪</span>
             <h3>Sandwiches</h3>
-            <p>Craft sandwiches and wraps for quick lunches.</p>
+            <p>Craft sandwiches and wraps for quick, satisfying lunches.</p>
           </article>
-          <article class="category-card">
+          <article class="category-card" data-jump="healthy">
             <span class="category-icon">🥗</span>
             <h3>Healthy</h3>
             <p>Light bowls, salads and clean-eating options.</p>
           </article>
-          <article class="category-card">
+          <article class="category-card" data-jump="desserts">
             <span class="category-icon">🍰</span>
             <h3>Desserts</h3>
-            <p>Sweet treats and indulgent desserts for every craving.</p>
+            <p>Sweet treats and indulgent desserts for every mood.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section featured-section">
+    <section id="dishes" class="section featured-section">
       <div class="container">
         <div class="section-heading">
-          <p class="eyebrow">Chef favorites</p>
+          <p class="eyebrow">Chef favourites</p>
           <h2>Top dishes you can order now</h2>
+          <p>Filter by category or browse everything — each dish is freshly prepared to order.</p>
         </div>
-        <div class="category-filters">
+
+        <div class="category-filters" role="group" aria-label="Filter dishes by category">
           <button class="filter-btn active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="asian">Asian</button>
           <button class="filter-btn" data-filter="pizza">Pizza</button>
@@ -113,77 +602,170 @@
           <button class="filter-btn" data-filter="healthy">Healthy</button>
           <button class="filter-btn" data-filter="desserts">Desserts</button>
         </div>
-        <div class="dish-grid">
+
+        <div class="dish-grid" id="dishGrid">
+
           <article class="dish-card" data-category="pizza">
             <div class="dish-image-wrap">
-              <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" alt="Margherita pizza" />
+              <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" alt="Classic Margherita pizza" loading="lazy" />
+              <span class="dish-tag">Pizza</span>
             </div>
             <div class="dish-copy">
+              <div class="dish-rating">★ 4.8 · 320 orders</div>
               <h3>Classic Margherita</h3>
-              <p>Fresh mozzarella, basil, tomato sauce, and golden crust.</p>
-              <span class="badge">$12</span>
-              <a href="order.html?item=classic-margherita" class="dish-link">Order</a>
+              <p>Fresh mozzarella, hand-torn basil, San Marzano tomato sauce on a golden, blistered crust.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$12</span>
+                <a href="order.html?item=classic-margherita" class="dish-link">Order</a>
+              </div>
             </div>
           </article>
+
           <article class="dish-card" data-category="asian">
             <div class="dish-image-wrap">
-              <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80" alt="Sushi bowl" />
+              <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80" alt="Sushi bowl" loading="lazy" />
+              <span class="dish-tag">Asian</span>
             </div>
             <div class="dish-copy">
+              <div class="dish-rating">★ 4.9 · 540 orders</div>
               <h3>Sushi Bowl</h3>
-              <p>Shrimp, avocado, rice, seaweed salad, and sesame dressing.</p>
-              <span class="badge">$18</span>
-              <a href="order.html?item=sushi-bowl" class="dish-link">Order</a>
+              <p>Tiger shrimp, creamy avocado, sushi rice, crisp seaweed salad, and toasted sesame dressing.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$18</span>
+                <a href="order.html?item=sushi-bowl" class="dish-link">Order</a>
+              </div>
             </div>
           </article>
+
           <article class="dish-card" data-category="burgers">
             <div class="dish-image-wrap">
-              <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" alt="Gourmet burger" />
+              <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" alt="Signature burger" loading="lazy" />
+              <span class="dish-tag">Burgers</span>
             </div>
             <div class="dish-copy">
+              <div class="dish-rating">★ 4.7 · 410 orders</div>
               <h3>Signature Burger</h3>
-              <p>Angus beef, special sauce, cheddar, pickles, and crispy onions.</p>
-              <span class="badge">$15</span>
-              <a href="order.html?item=signature-burger" class="dish-link">Order</a>
+              <p>200g Angus beef, house special sauce, aged cheddar, bread-and-butter pickles, crispy onions.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$15</span>
+                <a href="order.html?item=signature-burger" class="dish-link">Order</a>
+              </div>
             </div>
           </article>
+
           <article class="dish-card" data-category="healthy">
             <div class="dish-image-wrap">
-              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80" alt="Harvest salad" />
+              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80" alt="Harvest salad bowl" loading="lazy" />
+              <span class="dish-tag">Healthy</span>
             </div>
             <div class="dish-copy">
+              <div class="dish-rating">★ 4.6 · 290 orders</div>
               <h3>Harvest Salad</h3>
-              <p>Mixed greens, roasted squash, quinoa, almonds, and lemon vinaigrette.</p>
-              <span class="badge">$13</span>
-              <a href="order.html?item=harvest-salad" class="dish-link">Order</a>
+              <p>Mixed greens, honey-roasted squash, red quinoa, toasted almonds, lemon vinaigrette.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$13</span>
+                <a href="order.html?item=harvest-salad" class="dish-link">Order</a>
+              </div>
             </div>
           </article>
+
           <article class="dish-card" data-category="desserts">
             <div class="dish-image-wrap">
-              <img src="https://images.unsplash.com/photo-1589710759951-440f9d04efc6?auto=format&fit=crop&w=800&q=80" alt="Berry cheesecake" />
+              <img src="https://images.unsplash.com/photo-1589710759951-440f9d04efc6?auto=format&fit=crop&w=800&q=80" alt="Berry cheesecake" loading="lazy" />
+              <span class="dish-tag">Desserts</span>
             </div>
             <div class="dish-copy">
+              <div class="dish-rating">★ 4.9 · 620 orders</div>
               <h3>Berry Cheesecake</h3>
-              <p>Velvety cheesecake with berry compote and graham crust.</p>
-              <span class="badge">$10</span>
-              <a href="order.html?item=berry-cheesecake" class="dish-link">Order</a>
+              <p>Velvety New York–style cheesecake topped with warm mixed-berry compote on a buttery graham crust.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$10</span>
+                <a href="order.html?item=berry-cheesecake" class="dish-link">Order</a>
+              </div>
             </div>
           </article>
+
+          <article class="dish-card" data-category="asian">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80" alt="Ramen bowl" loading="lazy" />
+              <span class="dish-tag">Asian</span>
+            </div>
+            <div class="dish-copy">
+              <div class="dish-rating">★ 4.8 · 380 orders</div>
+              <h3>Tonkotsu Ramen</h3>
+              <p>Rich pork-bone broth, wavy noodles, chashu pork belly, soft-boiled egg, nori, and bamboo shoots.</p>
+              <div class="dish-footer">
+                <span class="dish-price">$16</span>
+                <a href="order.html?item=tonkotsu-ramen" class="dish-link">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <p class="dish-empty" id="dishEmpty" aria-live="polite">No dishes found for that category.</p>
         </div>
       </div>
     </section>
+
   </main>
 
-  <footer id="footer" class="site-footer">
+  <footer class="site-footer">
     <div class="container footer-inner">
       <p>© 2026 FreshBite. Fast delivery from the best local restaurants.</p>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="#">Support</a>
         <a href="#">Terms</a>
         <a href="#">Privacy</a>
-      </div>
+      </nav>
     </div>
   </footer>
-  <script src="script.js"></script>
+
+  <script>
+    // Mobile nav
+    const toggle = document.getElementById('navToggle');
+    const headerInner = document.querySelector('.header-inner');
+
+    toggle.addEventListener('click', () => {
+      const open = headerInner.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open);
+      toggle.textContent = open ? '✕' : '☰';
+    });
+    headerInner.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        headerInner.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', false);
+        toggle.textContent = '☰';
+      });
+    });
+
+    // Category filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const dishCards  = document.querySelectorAll('.dish-card');
+    const emptyMsg   = document.getElementById('dishEmpty');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        let visible = 0;
+        dishCards.forEach(card => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.hidden = !match;
+          if (match) visible++;
+        });
+        emptyMsg.classList.toggle('visible', visible === 0);
+      });
+    });
+
+    // Category card → filter + scroll
+    document.querySelectorAll('.category-card[data-jump]').forEach(card => {
+      card.addEventListener('click', () => {
+        const target = card.dataset.jump;
+        const matchBtn = document.querySelector(`.filter-btn[data-filter="${target}"]`);
+        if (matchBtn) matchBtn.click();
+        document.getElementById('dishes').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>

@@ -46,3 +46,52 @@
     });
   }
 })();
+
+// ── AI Chat widget ──
+(function(){
+  const toggle = document.getElementById('aiToggle');
+  const panel = document.getElementById('aiPanel');
+  const form = document.getElementById('aiForm');
+  const input = document.getElementById('aiInput');
+  const messages = document.getElementById('aiMessages');
+
+  if (!toggle || !panel || !form) return;
+
+  toggle.addEventListener('click', () => {
+    const opened = !panel.hasAttribute('hidden');
+    if (opened) panel.setAttribute('hidden', ''); else panel.removeAttribute('hidden');
+  });
+
+  function addMessage(text, from='assistant'){
+    const el = document.createElement('div');
+    el.className = `ai-message ai-${from}`;
+    el.textContent = text;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    addMessage(text, 'user');
+    input.value = '';
+    addMessage('Thinking...', 'assistant');
+
+    try {
+      const resp = await fetch('/api/ai', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ message: text })
+      });
+      const data = await resp.json();
+      const fallback = data.reply || 'The assistant is currently unavailable. Please check your OpenAI key and billing/quota settings.';
+      // replace last assistant "Thinking..." with real reply
+      const last = messages.querySelector('.ai-assistant:last-of-type');
+      if (last) last.textContent = fallback;
+      else addMessage(fallback, 'assistant');
+    } catch (err) {
+      addMessage('Error contacting assistant.', 'assistant');
+    }
+  });
+})();
+

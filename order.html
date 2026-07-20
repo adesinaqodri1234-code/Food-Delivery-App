@@ -17,6 +17,7 @@
           <a href="menu.html">Menu</a>
           <a href="about.html">About</a>
           <a href="order.html" class="active">Order</a>
+          <a href="track.html">Track</a>
         </nav>
         <div class="nav-actions">
           <a href="menu.html" class="btn btn-secondary">Back to Menu</a>
@@ -40,6 +41,62 @@
         </div>
         <div class="hero-image-card">
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Order checkout" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section categories-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Choose dishes</p>
+          <h2>Select from more food varieties</h2>
+          <p>Pick additional items to add to your order directly on this page.</p>
+        </div>
+        <div class="dish-grid">
+          <article class="dish-card" data-item="spicy-pad-thai" data-price="14">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1512058564366-c9e5d4d1c5d8?auto=format&fit=crop&w=800&q=80" alt="Spicy pad thai" />
+            </div>
+            <div class="dish-copy">
+              <span class="badge">Thai</span>
+              <h3>Spicy Pad Thai</h3>
+              <p>Rice noodles, shrimp, peanuts, lime, and chili sauce.</p>
+              <button type="button" class="btn btn-secondary add-to-order">Add to order</button>
+            </div>
+          </article>
+          <article class="dish-card" data-item="avocado-salad" data-price="11">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80" alt="Avocado salad" />
+            </div>
+            <div class="dish-copy">
+              <span class="badge">Salad</span>
+              <h3>Avocado Salad</h3>
+              <p>Fresh greens, avocado, citrus dressing, and toasted seeds.</p>
+              <button type="button" class="btn btn-secondary add-to-order">Add to order</button>
+            </div>
+          </article>
+          <article class="dish-card" data-item="bbq-burger" data-price="16">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="BBQ burger" />
+            </div>
+            <div class="dish-copy">
+              <span class="badge">Burger</span>
+              <h3>BBQ Burger</h3>
+              <p>Char-grilled patty, smoky sauce, cheddar, and crispy onions.</p>
+              <button type="button" class="btn btn-secondary add-to-order">Add to order</button>
+            </div>
+          </article>
+          <article class="dish-card" data-item="ramen-bowl" data-price="13">
+            <div class="dish-image-wrap">
+              <img src="https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=800&q=80" alt="Ramen bowl" />
+            </div>
+            <div class="dish-copy">
+              <span class="badge">Asian</span>
+              <h3>Ramen Bowl</h3>
+              <p>Rich broth, noodles, egg, and tender pork slices.</p>
+              <button type="button" class="btn btn-secondary add-to-order">Add to order</button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -153,7 +210,7 @@
             <h2>Ready to go</h2>
           </div>
           <div class="order-summary">
-            <article class="order-item" data-price="18">
+            <article class="order-item" data-item="sushi-bowl" data-price="18">
               <img src="https://images.unsplash.com/photo-1512058564366-c9e5d4d1c5d8?auto=format&fit=crop&w=800&q=80" alt="Sushi Bowl" />
               <div class="item-meta">
                 <h3>Sushi Bowl</h3>
@@ -169,7 +226,7 @@
                 <span class="badge item-price">$18</span>
               </div>
             </article>
-            <article class="order-item" data-price="12">
+            <article class="order-item" data-item="classic-margherita" data-price="12">
               <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" alt="Classic Margherita" />
               <div class="item-meta">
                 <h3>Classic Margherita</h3>
@@ -278,68 +335,109 @@
     })();
     
     (function(){
-      // Quantity controls and totals
-      const orderItems = Array.from(document.querySelectorAll('.order-item'));
-      const subtotalEl = document.querySelector('.order-total > div strong');
-      // safer selectors: compute totals from order-total structure
-      function parsePrice(text){
-        return Number(String(text).replace(/[^0-9.-]+/g, '')) || 0;
+      // Dish selection and dynamic order items
+      const orderSummary = document.querySelector('.order-summary');
+      const addButtons = Array.from(document.querySelectorAll('.add-to-order'));
+
+      function getOrderItems() {
+        return Array.from(document.querySelectorAll('.order-item'));
       }
 
-      function formatPrice(n){
-        return '$' + (n.toFixed(0));
+      function formatPrice(n) {
+        return '$' + n.toFixed(0);
       }
 
       function updateTotals(){
         let subtotal = 0;
+        const orderItems = getOrderItems();
         orderItems.forEach(item => {
           const price = Number(item.getAttribute('data-price')) || 0;
           const qty = Number(item.querySelector('.qty-input').value) || 0;
           subtotal += price * qty;
-          // update item price display
           const itemPriceEl = item.querySelector('.item-price');
           if(itemPriceEl) itemPriceEl.textContent = formatPrice(price * qty);
         });
-        // update totals in the order-total block
-        const totalEls = document.querySelectorAll('.order-total div strong');
-        // Subtotal
+        const totalEls = document.querySelectorAll('.order-total > div strong');
         if(totalEls[0]) totalEls[0].textContent = formatPrice(subtotal);
-        // delivery fee: keep fixed $3
         const deliveryFee = 3;
         if(totalEls[1]) totalEls[1].textContent = formatPrice(deliveryFee);
-        // service fee fixed $2
         const serviceFee = 2;
         if(totalEls[2]) totalEls[2].textContent = formatPrice(serviceFee);
-        // total row
         const total = subtotal + deliveryFee + serviceFee;
         const totalRow = document.querySelector('.order-total .total-row strong');
         if(totalRow) totalRow.textContent = formatPrice(total);
       }
 
-      function attachControls(){
-        orderItems.forEach(item => {
-          const minus = item.querySelector('.qty-btn.minus');
-          const plus = item.querySelector('.qty-btn.plus');
-          const input = item.querySelector('.qty-input');
-          minus.addEventListener('click', ()=>{
-            input.value = Math.max(Number(input.min || 0), Number(input.value) - 1);
-            updateTotals();
-          });
-          plus.addEventListener('click', ()=>{
-            input.value = Number(input.value) + 1;
-            updateTotals();
-          });
-          input.addEventListener('change', ()=>{
-            if(Number(input.value) < Number(input.min || 0)) input.value = input.min || 0;
-            updateTotals();
-          });
+      function attachControls(item){
+        const minus = item.querySelector('.qty-btn.minus');
+        const plus = item.querySelector('.qty-btn.plus');
+        const input = item.querySelector('.qty-input');
+        if (!minus || !plus || !input) return;
+        minus.addEventListener('click', ()=>{
+          input.value = Math.max(Number(input.min || 0), Number(input.value) - 1);
+          updateTotals();
+        });
+        plus.addEventListener('click', ()=>{
+          input.value = Number(input.value) + 1;
+          updateTotals();
+        });
+        input.addEventListener('change', ()=>{
+          if(Number(input.value) < Number(input.min || 0)) input.value = input.min || 0;
+          updateTotals();
         });
       }
 
-      if(orderItems.length) {
-        attachControls();
+      function addOrderItem(details){
+        const existing = orderSummary.querySelector(`.order-item[data-item="${details.id}"]`);
+        if(existing){
+          const qtyInput = existing.querySelector('.qty-input');
+          qtyInput.value = Number(qtyInput.value) + 1;
+          updateTotals();
+          return;
+        }
+
+        const item = document.createElement('article');
+        item.className = 'order-item';
+        item.setAttribute('data-item', details.id);
+        item.setAttribute('data-price', details.price);
+        item.innerHTML = `
+          <img src="${details.image}" alt="${details.name}" />
+          <div class="item-meta">
+            <h3>${details.name}</h3>
+            <p>${details.description}</p>
+            <div class="item-quantity">
+              <span>Quantity</span>
+              <div class="qty-controls">
+                <button type="button" class="qty-btn minus" aria-label="Decrease quantity">−</button>
+                <input type="number" class="qty-input" value="1" min="0" />
+                <button type="button" class="qty-btn plus" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <span class="badge item-price">${formatPrice(details.price)}</span>
+          </div>
+        `;
+        orderSummary.insertBefore(item, orderSummary.querySelector('.order-total'));
+        attachControls(item);
         updateTotals();
       }
+
+      addButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.dish-card');
+          if (!card) return;
+          addOrderItem({
+            id: card.dataset.item,
+            name: card.querySelector('h3')?.textContent || 'Dish',
+            description: card.querySelector('p')?.textContent || '',
+            price: Number(card.dataset.price) || 0,
+            image: card.querySelector('img')?.src || ''
+          });
+        });
+      });
+
+      const initialItems = getOrderItems();
+      initialItems.forEach(attachControls);
+      if(initialItems.length) updateTotals();
     })();
   </script>
 </body>
