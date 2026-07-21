@@ -35,7 +35,9 @@ app.post('/api/ai', async (req, res) => {
   if (!message) return res.status(400).json({ error: 'Missing message' });
 
   const OPENAI_KEY = process.env.OPENAI_API_KEY;
-  if (!OPENAI_KEY) return res.status(500).json({ error: 'Server misconfigured: missing OPENAI_API_KEY' });
+  if (!OPENAI_KEY) {
+    return res.json({ reply: buildFallbackReply(message), fallback: true });
+  }
 
   try {
     const resp = await fetch('https://api.openai.com/v1/chat/completions', {
