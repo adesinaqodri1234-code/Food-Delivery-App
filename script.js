@@ -57,15 +57,28 @@
 
   if (!toggle || !panel || !form) return;
 
+  // Same-origin locally, Render backend once deployed elsewhere (e.g. Netlify)
+  const aiApiUrl = window.location.hostname === "localhost"
+    ? "http://localhost:5174/api/ai"
+    : "https://food-delivery-app-9b2c.onrender.com/api/ai";
+
+  // Keeps the running conversation so the assistant remembers context.
+  // Only role/content are sent to the server — kept small and simple.
+  const conversation = [];
+
   toggle.addEventListener('click', () => {
     const opened = !panel.hasAttribute('hidden');
     if (opened) panel.setAttribute('hidden', ''); else panel.removeAttribute('hidden');
   });
 
-  function addMessage(text, from='assistant'){
+  // innerHTML is used (not textContent) so the assistant can include clickable
+  // order links. Replies only ever come from our own backend, which only ever
+  // inserts <a href="order.html?item=..."> tags around known dish names — so
+  // this is safe from arbitrary user-controlled markup.
+  function addMessage(html, from='assistant'){
     const el = document.createElement('div');
     el.className = `ai-message ai-${from}`;
-    el.textContent = text;
+    el.innerHTML = html;
     messages.appendChild(el);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -79,19 +92,26 @@
     addMessage('Thinking...', 'assistant');
 
     try {
-      const resp = await fetch('/api/ai', {
+      const resp = await fetch(aiApiUrl, {
         method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, history: conversation })
       });
       const data = await resp.json();
-      const fallback = data.reply || 'The assistant is currently unavailable. Please check your OpenAI key and billing/quota settings.';
+      const reply = data.reply || 'The assistant is currently unavailable. Please check your OpenAI key and billing/quota settings.';
+
       // replace last assistant "Thinking..." with real reply
       const last = messages.querySelector('.ai-assistant:last-of-type');
-      if (last) last.textContent = fallback;
-      else addMessage(fallback, 'assistant');
+      if (last) last.innerHTML = reply;
+      else addMessage(reply, 'assistant');
+
+      // remember this turn for the next request
+      conversation.push({ role: 'user', content: text });
+      conversation.push({ role: 'assistant', content: reply });
     } catch (err) {
-      addMessage('Error contacting assistant.', 'assistant');
+      const last = messages.querySelector('.ai-assistant:last-of-type');
+      const errMsg = 'The assistant could not connect. Please try again shortly.';
+      if (last) last.textContent = errMsg;
+      else addMessage(errMsg, 'assistant');
     }
   });
 })();
-
