@@ -959,10 +959,10 @@
     const aiMessages = document.getElementById('aiMessages');
 
     if (aiToggle && aiPanel && aiForm && aiInput && aiMessages) {
-     const aiApiUrl = window.location.hostname === "localhost"
+      const aiApiUrl = window.location.hostname === "localhost"
     ? "http://localhost:5174/api/ai"
-    : "https://food-delivery-app-9b2c.onrender.com/ api/ai";
-
+    : "https://food-delivery-app-9b2c.onrender.com/api/ai";
+     
       aiToggle.addEventListener('click', () => {
         const isOpen = aiPanel.hasAttribute('hidden');
         if (isOpen) {
